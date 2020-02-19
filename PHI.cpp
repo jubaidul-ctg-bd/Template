@@ -1,20 +1,23 @@
-//**SieveOfEratosthenes
-void Sieve(int n)
-{
-    bool prime[n+1];
-    memset(prime, true, sizeof(prime));
+//****Euler Totient Function (PHI)***//
+int phi[1000006], prime[1000006];
 
-    for (int p=2; p*p<=n; p++)
+void sievephi(int n)
+{
+    int i,j;
+
+    for(i=1; i<=n; i++) phi[i]=i;
+    phi[1]=1;
+    prime[1]=1;
+
+    for(i=2; i<=n; i++)
     {
-        if (prime[p] == true)
+        if(!prime[i])
         {
-            // Update all multiples of p
-            for (int i=p*2; i<=n; i += p)
-                prime[i] = false;
+            for(j=i;j<=n; j+=i)
+            {
+                prime[j+i]=1;
+                phi[j]=(phi[j]/i)*(i-1);
+            }
         }
     }
-    // Print all prime numbers
-    for (int p=2; p<=n; p++)
-       if (prime[p])
-          cout << p << " ";
 }
